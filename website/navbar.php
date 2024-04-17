@@ -70,7 +70,6 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <a href="categories_products.php" id="search_product" class="search-switch"><img src="img/icon/search.png" alt="" title="Search Products"></a>
-                    <a href="#" title="Wishlist"><img src="img/icon/heart.png" alt=""></a>
                     <a href="shopping_cart.php" title="Shopping Cart"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                     <div class="profile_menu">
                         <h6 title="Profile" class="menu_toggler"><i class="far fa-user"></i><i class="fas fa-sort-down"></i></h6>

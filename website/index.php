@@ -113,22 +113,22 @@ $file_name = "home"
                 $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1 LIMIT 4");
                 foreach ($fetch_product as $product) {
                     echo "<div class='product_card'>";
-                        echo "<a href='product_details.php?id=$product[id]' class='product_hover product_hover_1'> View Product</a>";
-                        echo "<a href='shopping_cart.php?id=$product[id]' class='product_hover product_hover_2'> + Add to Cart</a>";
                         echo "<div>";
-                            echo "<div class='product_image'>";
-                                echo "<img src='../admin-panel/$product[image]' alt=''>";
-                            echo "</div>";
-                            echo "<div class='product_body'>";
-                                echo "<h5>$product[name]</h5>";
-                                echo "<h6>Rs $product[price]/-</h6>";
-                                echo "<h6>Rs $product[mrp]/-</h6>";
-                                if($product['qty']>0){
-                                    echo "<h6 class='text-success'>Instock</h6>";
-                                }else{
-                                    echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                }
-                            echo "</div>";
+                            echo "<a href='product_details.php?id=$product[id]'>";
+                                echo "<div class='product_image'>";
+                                    echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                echo "</div>";
+                                echo "<div class='product_body'>";
+                                    echo "<h5>$product[name]</h5>";
+                                    echo "<h6>Rs $product[price]/-</h6>";
+                                    echo "<h6>Rs $product[mrp]/-</h6>";
+                                    if($product['qty']>0){
+                                        echo "<h6 class='text-success'>Instock</h6>";
+                                    }else{
+                                        echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                    }
+                                echo "</div>";
+                            echo "</a>";
                         echo "</div>";
                     echo "</div>";
                 }
@@ -197,22 +197,22 @@ $file_name = "home"
                 $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1");
                 foreach ($fetch_product as $product) {
                     echo "<div class='product_card'>";
-                        echo "<a href='product_details.php?id=$product[id]' class='product_hover product_hover_1'> View Product</a>";
-                        echo "<a href='shopping_cart.php?id=$product[id]' class='product_hover product_hover_2'> + Add to Cart</a>";
                         echo "<div>";
-                            echo "<div class='product_image'>";
-                                echo "<img src='../admin-panel/$product[image]' alt=''>";
-                            echo "</div>";
-                            echo "<div class='product_body'>";
-                                echo "<h5>$product[name]</h5>";
-                                echo "<h6>Rs $product[price]/-</h6>";
-                                echo "<h6>Rs $product[mrp]/-</h6>";
-                                if($product['qty']>0){
-                                    echo "<h6 class='text-success'>Instock</h6>";
-                                }else{
-                                    echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                }
-                            echo "</div>";
+                            echo"<a href='product_details.php?id=$product[id]'>";
+                                echo "<div class='product_image'>";
+                                    echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                echo "</div>";
+                                echo "<div class='product_body'>";
+                                    echo "<h5>$product[name]</h5>";
+                                    echo "<h6>Rs $product[price]/-</h6>";
+                                    echo "<h6>Rs $product[mrp]/-</h6>";
+                                    if($product['qty']>0){
+                                        echo "<h6 class='text-success'>Instock</h6>";
+                                    }else{
+                                        echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                    }
+                                echo "</div>";
+                            echo "</a>";
                         echo "</div>";
                     echo "</div>";
                 }

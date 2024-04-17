@@ -1,10 +1,13 @@
-<?php require("connection.php"); ?>
+<?php
+    session_start();
+    require("connection.php");
+?>
 <?php require("top.php"); ?>
     <title>Product Details</title>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -119,11 +122,11 @@
                             <?php
                                 $qty =$fetch['qty'];
                                 if($qty > 0){
-                                    echo "<div class='instoc'>";
+                                    echo "<div class='instoc my-2'>";
                                         echo "<span>InStock $fetch[qty]  $fetch[name] left.</span>";
                                     echo "</div>";
                                 }else{
-                                    echo "<div class='instoc'>";
+                                    echo "<div class='instoc my-2'>";
                                         echo "<span>Out of Stock $fetch[name].</span>";
                                     echo "</div>";
                                 }
@@ -164,12 +167,35 @@
                                 </div>
                             </div> -->
                             <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
+                                <form method="POST">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <input type="text" value="1" name="qty">
+                                        </div>
                                     </div>
-                                </div>
-                                <a href="#" class="primary-btn">add to cart</a>
+                                    <button type="submit" name="cart_btn" class="primary-btn">add to cart</button>
+                                </form>
+                                <?php
+                                    if(isset($_POST['cart_btn'])){
+                                        $qty_query = mysqli_query($connection,"SELECT * FROM products WHERE id = $_GET[id]");
+                                        $fetch_qty = mysqli_fetch_assoc($qty_query);
+                                        $qty = $_POST['qty'];
+                                        if($qty > $fetch_qty['qty']){
+                                            echo "<script>alert('$fetch_qty[qty] $fetch_qty[name] left')</script>";
+                                        }else if($qty <= 0){
+                                            echo "<script>alert('Minimum Qty should be 1 or Greater than 1')</script>";
+                                        }else{
+                                            $user_id = $_SESSION['login_user'];
+                                            $product_id = $fetch_qty['id'];
+                                            $product_qty = $_POST['qty'];
+                                            $insert_query = mysqli_query($connection,"INSERT INTO cart (user_id,product_id,product_qty)VALUES($user_id,$product_id,$product_qty)");
+                                            if($insert_query){
+                                                echo "<script>alert('Product Add Successfully in the cart')</script>";
+                                            }
+                                            echo "<script>window.location.href = 'shopping_cart.php'</script>";
+                                        }
+                                    }
+                                ?>
                             </div>
                             <div class="product__details__btns__option">
                                 <a href="#"><i class="fa fa-heart"></i> add to wishlist</a>

@@ -1,9 +1,16 @@
+<?php
+    session_start();
+    if(!$_SESSION['login_user']){
+        echo "<script>window.location.href = 'login.php'</script>";
+    }
+    require("connection.php");
+?>
 <?php require("top.php"); ?>
 <title>Shopping Cart</title>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Offcanvas Menu Begin -->
     <div class="offcanvas-menu-overlay"></div>
@@ -57,118 +64,105 @@
     <!-- Breadcrumb Section End -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
+    <section class="shopping-cart my-5">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="shopping__cart__table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="img/shopping-cart/cart-1.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>T-shirt Contrast Pocket</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 30.00</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="img/shopping-cart/cart-2.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Diagonal Textured Cap</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 32.50</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="img/shopping-cart/cart-3.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Basic Flowing Scarf</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 47.00</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="product__cart__item">
-                                        <div class="product__cart__item__pic">
-                                            <img src="img/shopping-cart/cart-4.jpg" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6>Basic Flowing Scarf</h6>
-                                            <h5>$98.49</h5>
-                                        </div>
-                                    </td>
-                                    <td class="quantity__item">
-                                        <div class="quantity">
-                                            <div class="pro-qty-2">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 30.00</td>
-                                    <td class="cart__close"><i class="fa fa-close"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn">
-                                <a href="#">Continue Shopping</a>
+            <div class="row my-2">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <form method="POST">
+                        <div class="shopping__cart__table">
+                            <table class="table cart_table">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col"><h5>Product Image</h5></th>
+                                        <th scope="col"><h5>Product Name</h5></th>
+                                        <th scope="col"><h5>Product Price</h5></th>
+                                        <th scope="col"><h5>Product Qty</h5></th>
+                                        <th scope="col"><h5>Total</h5></th>
+                                        <th scope="col"><h5>Remove</h5></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    
+                                        $fetch_data = "SELECT * FROM cart WHERE user_id = '" . $_SESSION['login_user'] . "'";
+                                        $fetch_data_run = mysqli_query($connection, $fetch_data);
+                                        $numrow = mysqli_num_rows($fetch_data_run);
+
+                                        if ($numrow > 0) {
+                                            // $fetch_cart = mysqli_fetch_assoc($fetch_data_run);
+                                            while ($fetch_assoc = mysqli_fetch_assoc($fetch_data_run)) {
+                                                $product_query = mysqli_query($connection, "SELECT * FROM products WHERE id = '" . $fetch_assoc['product_id'] . "'");
+                                                $pro_fetch = mysqli_fetch_assoc($product_query);
+                                                echo "<tr>";
+                                                echo "<td>";
+                                                    echo "<div class='cart_table_td_items cart_image'>";
+                                                        echo "<img src='../admin-panel/" . $pro_fetch['image'] . "' class='cart_img' alt='$pro_fetch[name] Image'>";
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td>";
+                                                    echo "<div class='cart_table_td_items cart_pro_name'>";
+                                                        echo "<input type='hidden' name='p_id' value='$fetch_assoc[id]'/>";
+                                                        echo "<h5>" . $pro_fetch['name'] . "</h5>";
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td>";
+                                                    echo "<div class='cart_table_td_items cart_pro_price'>";
+                                                        echo "<h5>Rs " . $pro_fetch['price'] . "/-</h5>";
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td class='quantity__item'>";
+                                                    echo "<div class='quantity'>";
+                                                        echo "<div class='pro-qty-2'>";
+                                                            echo "<input type='number' value='" . $fetch_assoc['product_qty'] . "' name='p_qty' >";
+                                                        echo "</div>";
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td>";
+                                                    echo "<div class='cart_table_td_items cart_pro_total'>";
+                                                        echo "<h5>Rs " . $pro_fetch['price'] * $fetch_assoc['product_qty'] . "/-</h5>";
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td class='cart__close' ><button type='submit' name='remove_cart_item' value='$fetch_assoc[id]' class='btn' onclick='return cart_cross()' ><i class='fa fa-close'></i></button></td>";
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<div class='bg-danger text-white px-5 py-2 my-2'><h4>No items found in the cart.</h4></div>";
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+                            <?php 
+                                if(isset($_POST['remove_cart_item'])){
+                                    $remove_query = "DELETE FROM cart WHERE id = $_POST[remove_cart_item]";
+                                    $run_remove_query = mysqli_query($connection,$remove_query);
+                                    if($run_remove_query){
+                                        echo "<script>alert('Item Remove Successfully');window.location.href='shopping_cart.php'</script>";
+                                    }
+                                }
+                            ?>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn">
+                                    <a href="categories_products.php">Continue Shopping</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="continue__btn update__btn">
+                                    <button type="submit" class="btn btn-dark btn-lg " name="update_cart_btn" >Update cart</button>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="continue__btn update__btn">
-                                <a href="#"><i class="fa fa-spinner"></i> Update cart</a>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
+                    <?php
+                        if(isset($_POST['update_cart_btn'])){
+                        //    continue on update cart and validate product qty
+                        }
+                    ?>
                 </div>
-                <div class="col-lg-4">
+            </div>
+            <div class="row my-4 ">
+                <div class="col-md-6">
                     <div class="cart__discount">
                         <h6>Discount codes</h6>
                         <form action="#">
@@ -176,6 +170,9 @@
                             <button type="submit">Apply</button>
                         </form>
                     </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    
                     <div class="cart__total">
                         <h6>Cart total</h6>
                         <ul>
@@ -202,5 +199,9 @@
         </div>
     </div>
     <!-- Search End -->
-
+    <script>
+        function cart_cross(){
+            return confirm("Are you sure you want to remove this item from cart")
+        }
+    </script>
 <?php require("bottom.php"); ?>

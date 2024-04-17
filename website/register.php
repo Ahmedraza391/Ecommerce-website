@@ -44,7 +44,7 @@
                             if($fetch_user['user_email'] != $email){
                                 $query = mysqli_query($connection,"INSERT INTO users (user_name,user_email,user_password,added_on)VALUES('$name','$email','$password','$date')");
                                 if($query){
-                                    echo "<script>alert('Regsitration Successfull');window.location.href='login.php'</>";
+                                    echo "<script>alert('Regsitration Successfull');window.location.href='login.php'</script>";
                                 }
                             }else{
                                 echo "<script>alert('Email Already Exists');</script>";

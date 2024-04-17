@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2024 at 02:25 PM
+-- Generation Time: Apr 17, 2024 at 12:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,6 +39,29 @@ CREATE TABLE `admin_users` (
 
 INSERT INTO `admin_users` (`id`, `username`, `password`) VALUES
 (1, 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_qty` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `product_qty`, `status`) VALUES
+(1, 1, 2, 2, 0),
+(2, 1, 1, 10, 0),
+(5, 1, 3, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -139,7 +162,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_mobile`, `added_on`) VALUES
-(1, 'Ahmed Raza', 'ahmed@gmail.com', 'ahmed123', '03269243547', '2024-04-07 05:22:58');
+(1, 'Ahmed Raza', 'ahmed@gmail.com', 'ahmed123', '03269243547', '2024-04-07 05:22:58'),
+(2, 'Wahab', 'wahab@gmail.com', 'wahab123', NULL, '2024-04-16 19:52:51'),
+(4, 'Nizam', 'nizam@gmail.com', 'nizam123', NULL, '2024-04-16 19:55:39'),
+(5, 'Farooq', 'farooq@gmail.com', 'farooq123', NULL, '2024-04-16 19:57:08');
 
 --
 -- Indexes for dumped tables
@@ -149,6 +175,12 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`, `use
 -- Indexes for table `admin_users`
 --
 ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -186,6 +218,12 @@ ALTER TABLE `admin_users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -207,7 +245,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
