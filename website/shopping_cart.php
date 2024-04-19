@@ -73,6 +73,7 @@
                             <table class="table cart_table">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col"><h5>Cart Id</h5></th>
                                         <th scope="col"><h5>Product Image</h5></th>
                                         <th scope="col"><h5>Product Name</h5></th>
                                         <th scope="col"><h5>Product Price</h5></th>
@@ -96,6 +97,11 @@
                                                 echo "<tr>";
                                                 echo "<td>";
                                                     echo "<div class='cart_table_td_items cart_image'>";
+                                                        echo $fetch_assoc['id'];
+                                                    echo "</div>";
+                                                echo "</td>";
+                                                echo "<td>";
+                                                    echo "<div class='cart_table_td_items cart_image'>";
                                                         echo "<img src='../admin-panel/" . $pro_fetch['image'] . "' class='cart_img' alt='$pro_fetch[name] Image'>";
                                                     echo "</div>";
                                                 echo "</td>";
@@ -113,7 +119,7 @@
                                                 echo "<td class='quantity__item'>";
                                                     echo "<div class='quantity'>";
                                                         echo "<div class='pro-qty-2'>";
-                                                            echo "<input type='number' value='" . $fetch_assoc['product_qty'] . "' name='p_qty' >";
+                                                            echo "<input type='number' value='" . $fetch_assoc['product_qty'] . "' name='p_qty[$fetch_assoc[id]]' >";
                                                         echo "</div>";
                                                     echo "</div>";
                                                 echo "</td>";
@@ -156,7 +162,25 @@
                     </form>
                     <?php
                         if(isset($_POST['update_cart_btn'])){
-                        //    continue on update cart and validate product qty
+                            foreach($_POST['p_qty'] as $cart_item_id => $quantity) {
+                                // Sanitize the input
+                                $cart_item_id = mysqli_real_escape_string($connection, $cart_item_id);
+                                $quantity = mysqli_real_escape_string($connection, $quantity);
+                                
+                                // Update the cart with new quantity
+                                $selectProductQuantity = mysqli_fetch_assoc(mysqli_query($connection,"SELECT * FROM product"));
+                                if($quantity<$selectProductQuantity['qty'])
+                                {
+                                    $updateCart = "UPDATE cart SET product_qty='$quantity' WHERE id='$cart_item_id'";
+                                    mysqli_query($connection, $updateCart);
+                                }
+                                else
+                                {
+                                    echo "<script>alert('Limit Exceeed')</script>";
+                                }
+
+                                
+                            }
                         }
                     ?>
 
