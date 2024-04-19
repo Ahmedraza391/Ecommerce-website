@@ -38,7 +38,6 @@ body {
 	font-family: "Nunito Sans", sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
-
 h1,
 h2,
 h3,
@@ -3359,8 +3358,28 @@ ol {
 header{
 	position: relative;
 }
+.menu_toggler{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.user_dropdown{
+	width: 30px;
+	height: 30px;
+    border: 2px solid #000;
+    border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 2px;
+	padding-top: 2px;
+}
+.user_dropdown h5{
+	font-size: 16px;
+	font-weight: bold;
+}
 .profile_menu:hover .profile_dropdown{
-	top: 55px;
+	top: 65px;
 }
 .profile_dropdown{
 	/* width: 150px; */

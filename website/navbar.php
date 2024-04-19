@@ -72,10 +72,30 @@
                     <a href="categories_products.php" id="search_product" class="search-switch"><img src="img/icon/search.png" alt="" title="Search Products"></a>
                     <a href="shopping_cart.php" title="Shopping Cart"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
                     <div class="profile_menu">
-                        <h6 title="Profile" class="menu_toggler"><i class="far fa-user"></i><i class="fas fa-sort-down"></i></h6>
+                        <div title="Profile" class="menu_toggler">
+                            <?php 
+                                if(isset($_SESSION['login_user'])){
+                                    $user_id = $_SESSION['login_user'];
+                                    $fetch_user = mysqli_query($connection,"SELECT * FROM users WHERE user_id = $user_id");
+                                    $fetch_user_assoc = mysqli_fetch_assoc($fetch_user);
+                                    $fetch_user_name = $fetch_user_assoc['user_name'];
+                                    $first_character = substr($fetch_user_name, 0, 1);
+                                    echo "<div class='user_dropdown'><h5>$first_character</h5></div>";
+                                }else{
+                                    echo "<i class='far fa-user'></i>";
+                                }
+                            ?>
+                            <i class="fas fa-sort-down"></i>
+                        </div>
                         <ul class="profile_dropdown">
                             <?php
                                 if(isset($_SESSION['login_user'])){
+                                    $user_id = $_SESSION['login_user'];
+                                    $fetch_user = mysqli_query($connection,"SELECT * FROM users WHERE user_id = $user_id");
+                                    $fetch_user_assoc = mysqli_fetch_assoc($fetch_user);
+                                    $fetch_user_name = $fetch_user_assoc['user_name'];
+                                    $first_character = substr($fetch_user_name, 0, 1);
+                                    echo "<script>console.log($first_character)</script>";
                                     echo "<li>
                                         <a href='user_profile.php'><b>Profile</b><i class='fas fa-user'></i></a>
                                     </li>";

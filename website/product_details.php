@@ -177,22 +177,32 @@
                                 </form>
                                 <?php
                                     if(isset($_POST['cart_btn'])){
-                                        $qty_query = mysqli_query($connection,"SELECT * FROM products WHERE id = $_GET[id]");
-                                        $fetch_qty = mysqli_fetch_assoc($qty_query);
-                                        $qty = $_POST['qty'];
-                                        if($qty > $fetch_qty['qty']){
-                                            echo "<script>alert('$fetch_qty[qty] $fetch_qty[name] left')</script>";
-                                        }else if($qty <= 0){
-                                            echo "<script>alert('Minimum Qty should be 1 or Greater than 1')</script>";
-                                        }else{
-                                            $user_id = $_SESSION['login_user'];
-                                            $product_id = $fetch_qty['id'];
-                                            $product_qty = $_POST['qty'];
-                                            $insert_query = mysqli_query($connection,"INSERT INTO cart (user_id,product_id,product_qty)VALUES($user_id,$product_id,$product_qty)");
-                                            if($insert_query){
-                                                echo "<script>alert('Product Add Successfully in the cart')</script>";
+                                        if($_SESSION['login_user']){
+                                            $qty_query = mysqli_query($connection,"SELECT * FROM products WHERE id = $_GET[id]");
+                                            $fetch_qty = mysqli_fetch_assoc($qty_query);
+                                            $qty = $_POST['qty'];
+                                            if($qty > $fetch_qty['qty']){
+                                                echo "<script>alert('$fetch_qty[qty] $fetch_qty[name] left')</script>";
+                                            }else if($qty <= 0){
+                                                echo "<script>alert('Minimum Qty should be 1 or Greater than 1')</script>";
+                                            }else{
+                                                $user_id = $_SESSION['login_user'];
+                                                $product_id = $fetch_qty['id'];
+                                                $product_qty = $_POST['qty'];
+                                                $if_product_exists = mysqli_query($connection,"SELECT * FROM cart WHERE product_id = $product_id");
+                                                $exist_count = mysqli_num_rows($if_product_exists);
+                                                if($exist_count > 0){
+                                                    echo "<script>alert('Product Already Exists')</script>";
+                                                }else{
+                                                    $insert_query = mysqli_query($connection,"INSERT INTO cart (user_id,product_id,product_qty)VALUES($user_id,$product_id,$product_qty)");
+                                                    if($insert_query){
+                                                        echo "<script>alert('Product Add Successfully in the cart')</script>";
+                                                    }
+                                                    echo "<script>window.location.href = 'shopping_cart.php'</script>";
+                                                }
                                             }
-                                            echo "<script>window.location.href = 'shopping_cart.php'</script>";
+                                        }else{
+                                            echo "<script>window.location.href = 'login.php'</script>";
                                         }
                                     }
                                 ?>
