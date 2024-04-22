@@ -70,7 +70,19 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <a href="categories_products.php" id="search_product" class="search-switch"><img src="img/icon/search.png" alt="" title="Search Products"></a>
-                    <a href="shopping_cart.php" title="Shopping Cart"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
+                    <?php 
+                        if(isset($_SESSION['login_user'])){
+                            $fetch_cart_count = mysqli_query($connection,"SELECT * FROM cart WHERE user_id = $_SESSION[login_user]");
+                            if(mysqli_num_rows($fetch_cart_count)>0){
+                                $count = mysqli_num_rows($fetch_cart_count);
+                            }else{
+                                $count = 0;
+                            }
+                        }else{
+                            $count = 0;
+                        }
+                    ?>
+                    <a href="shopping_cart.php" title="Shopping Cart"><img src="img/icon/cart.png" alt=""><span class="font-weight-bold text-danger "><?php echo $count; ?></span></a>
                     <div class="profile_menu">
                         <div title="Profile" class="menu_toggler">
                             <?php 

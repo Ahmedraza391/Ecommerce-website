@@ -556,16 +556,17 @@ ol {
 	position: relative;
 }
 .header__nav__option a img{
-	width: 16px;
-	height: 16px;
+	width: 20px;
+	height: 20px;
 }
 
 .header__nav__option a span {
 	color: #0d0d0d;
-	font-size: 11px;
+	font-size: 16px;
 	position: absolute;
-	left: 5px;
-	top: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 4px;
 }
 
 .header__nav__option a:last-child {
@@ -2404,16 +2405,42 @@ ol {
 }
 
 .cart__total {
+	width: 100%;
 	background: #f3f2ee;
 	padding: 35px 40px 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .cart__total h6 {
 	color: #111111;
 	text-transform: uppercase;
 	margin-bottom: 12px;
+	font-weight: bold;
+	font-size: larger;
 }
-
+.cart__total form {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+.cart__total form input{
+	width: 70%;
+	margin: 0 auto;
+	outline: none;
+	border: none;
+	padding: 5px 15px;
+	margin-bottom: 10px ;
+	background-color: #b7b7b7;
+	color: #000;
+	text-align: center;
+}
+.cart__total form input::placeholder{
+	color: #000;
+}
 .cart__total ul {
 	margin-bottom: 25px;
 }
@@ -2434,9 +2461,17 @@ ol {
 
 .cart__total .primary-btn {
 	display: block;
-	padding: 12px 10px;
+	padding: 5px 15px;
 	text-align: center;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
+	background-color: #a9a9a9;
+	color: #000;
+	border: none;
+	outline: none;
+	border-radius: 3px;
+}
+.cart__total .primary-btn:hover{
+	background-color: #898888;
 }
 
 /*---------------------

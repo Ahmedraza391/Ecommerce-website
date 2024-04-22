@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2024 at 04:31 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Apr 22, 2024 at 02:24 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,8 +60,8 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `product_qty`, `status`) VALUES
 (1, 1, 2, 2, 0),
-(2, 1, 1, 7, 0),
-(5, 1, 3, 3, 0);
+(2, 1, 1, 10, 0),
+(5, 1, 3, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ INSERT INTO `products` (`id`, `categories_id`, `name`, `mrp`, `price`, `qty`, `i
 (1, 1, 'Polo Shirt', 1500, 1399, 10, 'img/web_image/1,Mens Shirts/Polo Shirt/product-5.jpg', 'Short Descripttion', 'Long Description', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
 (2, 2, 'Nike Shoes', 4000, 2999, 2, 'img/web_image/2,Mens Shoes/Nike Shoes/product-1.jpg', 'Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.', 'Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.Nike Shoes. It is very Soft and Comfortable Shoes. This Shoes is in Affordable Price.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
 (3, 1, 'Nike Hoddie', 1500, 1300, 12, 'img/web_image/1,Mens Shirts/Nike Hoddie/product-12.jpg', 'High Quality Nike Hoddie.', 'High Quality Nike Hoddie.High Quality Nike Hoddie.High Quality Nike Hoddie.High Quality Nike Hoddie.High Quality Nike Hoddie.High Quality Nike Hoddie.High Quality Nike Hoddie.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
-(4, 2, 'Addidas Shoes', 3500, 3298, 5, 'img/web_image/2,Mens Shoes/Addidas Shoes/product-3.jpg', 'Beautiful Colored Addidas Shoes in Blue Color.', 'Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.', 'Meta Title', 'Meta Description', 'Meta Keyword\r\n', 1),
+(4, 2, 'Addidas Shoes', 3500, 3298, 0, 'img/web_image/2,Mens Shoes/Addidas Shoes/product-3.jpg', 'Beautiful Colored Addidas Shoes in Blue Color.', 'Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.Beautiful Colored Addidas Shoes in Blue Color.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
 (5, 1, 'Nike Polo Shirt', 1200, 900, 15, 'img/web_image/1,Mens Shirts/Nike Polo Shirt/product-8.jpg', 'Nice Looked Polo T-Shirt in Very Low Price.', 'Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.Nice Looked Polo T-Shirt in Very Low Price.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
 (6, 3, 'Nike Bags', 1300, 1000, 10, 'img/web_image/3,Bags/Nike Bags/product-7.jpg', 'Leather Bag with Affordable Price.', 'Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.Leather Bag with Affordable Price.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
 (7, 3, 'Addidas Bag', 1600, 1500, 5, 'img/web_image/3,Bags/Addidas Bag/product-11.jpg', 'Addidas Bag With Leather Comfort.', 'Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.Addidas Bag With Leather Comfort.', 'Meta Title', 'Meta Description', 'Meta Keyword', 1),
@@ -221,7 +221,7 @@ ALTER TABLE `admin_users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`

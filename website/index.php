@@ -11,7 +11,6 @@
 $file_name = "home"
 ?>
 <?php require("navbar.php") ?>
-<!-- Hero Section Begin -->
 <section class="hero">
     <div class="hero__slider owl-carousel">
         <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
@@ -57,9 +56,6 @@ $file_name = "home"
         </div>
     </div>
 </section>
-<!-- Hero Section End -->
-
-<!-- Banner Section Begin -->
 <section class="banner spad">
     <div class="container">
         <div class="row">
@@ -99,8 +95,6 @@ $file_name = "home"
         </div>
     </div>
 </section>
-<!-- Banner Section End -->
-<!-- latest Products  -->
 <section class="product_section">
     <div class="container">
         <div class="row m-0">
@@ -136,8 +130,6 @@ $file_name = "home"
         </div>
     </div>
 </section>
-<!-- latest Products  -->
-<!-- Categories Section Begin -->
 <section class="categories spad">
     <div class="container">
         <div class="row">
@@ -183,8 +175,6 @@ $file_name = "home"
         </div>
     </div>
 </section>
-<!-- Categories Section End -->
-<!-- latest Products  -->
 <section class="product_section">
     <div class="container">
         <div class="row m-0">
@@ -220,6 +210,5 @@ $file_name = "home"
         </div>
     </div>
 </section>
-<!-- latest Products  -->
 <?php require("footer.php") ?>
 <?php require("bottom.php") ?>

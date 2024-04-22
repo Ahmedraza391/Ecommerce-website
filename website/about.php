@@ -1,4 +1,7 @@
-<?php require("top.php"); ?>
+<?php 
+    session_start();    
+    require("top.php"); 
+?>
     <title>About Us</title>
     <!-- Page Preloder -->
     <div id="preloder">
