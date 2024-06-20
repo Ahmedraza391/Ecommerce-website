@@ -35,7 +35,7 @@ include("connection.php");
                                     <button class="btn btn-primary font-weight-bolder"> / Back</button>
                                 </a>
                                 <div class="text-center d-flex justify-content-center my-3">
-                                    <h2 class="text-dark border-bottom border-dark w-50 fw-bold ">Add Products</h2>
+                                    <h2 class="text-dark border-bottom border-dark w-50 font-weight-bold">Add Products</h2>
                                 </div>
                                 <form method="POST" enctype="multipart/form-data">
                                     <select name="category" class="custom-select mb-3" required>

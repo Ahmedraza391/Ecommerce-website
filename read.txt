@@ -1,1 +1,1 @@
-sir sy pouchna ha kai jab kisi product ko add to cart kar rahe ho aur user login nhi hova ho tu usko phly login karwana phir woh jo kam phly kar raha tha wahi sy shoro ho mtlb agar woh login hony sy phly product cart m add kar raha tha tu login honay kai pad woh wahi sy Continue kary
+1) sir sy pouchna ha kai jab kisi product ko add to cart kar rahe ho aur user login nhi hova ho tu usko phly login karwana phir woh jo kam phly kar raha tha wahi sy shoro ho mtlb agar woh login hony sy phly product cart m add kar raha tha tu login honay kai pad woh wahi sy Continue kary

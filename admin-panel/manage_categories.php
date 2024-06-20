@@ -20,15 +20,13 @@ include("connection.php");
             <div class="row m-0">
                 <div class="col-md-2 "></div>
                 <div class="col-md-10 ">
-                    <div class="container bg-light shadow p-1 mb-5 bg-light rounded">
+                    <div class="container bg-light shadow p-md-1 mb-5 bg-light rounded">
                         <div class="row py-5">
                             <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <a href="categories.php">
-                                    <button class="btn btn-primary font-weight-bolder"> / Back</button>
-                                </a>
-                                <div class="text-center d-flex justify-content-center my-3">
-                                    <h2 class="text-dark border-bottom border-dark w-25 fw-bold ">Categoires</h2>
+                            <div class="col-md-8 colsm-12">
+                                <a href="categories.php" class="btn btn-primary font-weight-bolder">/ Back</a>
+                                <div class="text-center d-block d-md-flex justify-content-center my-3">
+                                    <h2 class="text-dark h3 h2-md border-bottom border-dark w-25 fw-bold ">Categoires</h2>
                                 </div>
                                 <?php 
                                     if(isset($_POST['btn_add'])){
@@ -53,9 +51,7 @@ include("connection.php");
                                         <input type="text" class="form-control" name="category" placeholder="Enter Category Name" required>
                                     </div>
                                     <div class="button my-2">
-                                        <a href="categories.php">
-                                            <button class="btn btn-success px-5" type="submit" name="btn_add" >Add</button>
-                                        </a>
+                                        <button type="submit" name="btn_add"  class="btn btn btn-success px-md-5">Add</button>  
                                     </div>
                                 </form>
                                 <span class="text-danger border-danger border-bottom py-1 font-weight-bold"><?php if(isset($_POST['btn_add'])){echo $msg;} ?></span>

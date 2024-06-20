@@ -10,7 +10,19 @@ include("connection.php");
 ?>
 <?php include("top_page.php"); ?>
 <?php include("sidebar.php"); ?>
-
+<style>
+    .overflow{
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 10px;
+    }
+    table{
+        width: 100% !important;
+        height: 100%;
+        min-width: max-content;
+    }
+</style>
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -30,45 +42,47 @@ include("connection.php");
                     $result = mysqli_query($connection, $query);
                     $count = mysqli_num_rows($result)
                     ?>
-                    <table class='table text-dark table-bordered table-striped <?php if($count < 1){echo "d-none";}else{echo ""; } ?> ' id="table">
-                        <thead>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Password</th>
-                            <th>Mobile No</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </thead>
-                        <?php
-                        if ($count > 0) {
-                            foreach ($result as $row) {
-                                echo "<tr>";
-                                echo "<td>$row[user_id]</td>";
-                                echo "<td>$row[user_name]</td>";
-                                echo "<td>$row[user_email]</td>";
-                                echo "<td>$row[user_password]</td>";
-                                echo "<td>$row[user_mobile]</td>";
-                                echo "<td>$row[added_on]</td>";
-                                echo "<td>
-                                        <a href='delete_contact_detail.php?id=$row[user_id]' onclick='return checking()' >
-                                            <button class='btn btn-danger px-2 btn-sm '>
-                                                Delete
-                                            </button>
-                                        </a>
-                                    </td>";
-                                echo "</tr>";
-                            }
-                        } else {
+                    <div class="overflow">
+                        <table class='table text-dark table-bordered table-striped <?php if($count < 1){echo "d-none";}else{echo ""; } ?> ' id="table">
+                            <thead>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Password</th>
+                                <th>Mobile No</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </thead>
+                            <?php
+                            if ($count > 0) {
+                                foreach ($result as $row) {
+                                    echo "<tr>";
+                                    echo "<td>$row[user_id]</td>";
+                                    echo "<td>$row[user_name]</td>";
+                                    echo "<td>$row[user_email]</td>";
+                                    echo "<td>$row[user_password]</td>";
+                                    echo "<td>$row[user_mobile]</td>";
+                                    echo "<td>$row[added_on]</td>";
+                                    echo "<td>
+                                            <a href='delete_contact_detail.php?id=$row[user_id]' onclick='return checking()' >
+                                                <button class='btn btn-danger px-2 btn-sm '>
+                                                    Delete
+                                                </button>
+                                            </a>
+                                        </td>";
+                                    echo "</tr>";
+                                }
+                            } else {
 
-                            echo "
-                            <div id='contact_massage' class='text-light bg-secondary p-5 d-none justify-content-center'>
-                                <h2>You Dont Have Massages</h2>
-                            </div>
-                            ";
-                        }
-                        ?>
-                    </table>
+                                echo "
+                                <div id='contact_massage' class='text-light bg-secondary p-5 d-none justify-content-center'>
+                                    <h2>You Dont Have Massages</h2>
+                                </div>
+                                ";
+                            }
+                            ?>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

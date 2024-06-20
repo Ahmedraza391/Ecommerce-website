@@ -5,40 +5,9 @@
 <?php require("top.php"); ?>
     <title>Product Details</title>
     <!-- Page Preloder -->
-    <!-- <div id="preloder">
+    <div id="preloder">
         <div class="loader"></div>
-    </div> -->
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-            <div class="offcanvas__top__hover">
-                <span>Usd <i class="arrow_carrot-down"></i></span>
-                <ul>
-                    <li>USD</li>
-                    <li>EUR</li>
-                    <li>USD</li>
-                </ul>
-            </div>
-        </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="img/icon/search.png" alt=""></a>
-            <a href="#"><img src="img/icon/heart.png" alt=""></a>
-            <a href="#"><img src="img/icon/cart.png" alt=""> <span>0</span></a>
-            <div class="price">$0.00</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
     </div>
-    <!-- Offcanvas Menu End -->
-
     <?php require("navbar.php"); ?>
 
     <?php
@@ -53,7 +22,7 @@
                     <div class="col-lg-12">
                         <div class="product__details__breadcrumb">
                             <a href="index.php">Home</a>
-                            <a href="products.php?c_id=<?php echo $fetch["categories_id"]; ?>">Shop</a>
+                            <a href="categories_products.php">Shop</a>
                             <span>Product Details</span>
                         </div>
                     </div>
@@ -182,19 +151,23 @@
                                             $fetch_qty = mysqli_fetch_assoc($qty_query);
                                             $qty = $_POST['qty'];
                                             if($qty > $fetch_qty['qty']){
-                                                echo "<script>alert('$fetch_qty[qty] $fetch_qty[name] left')</script>";
+                                                if($fetch_qty['qty']<=0 ){
+                                                    echo "<script>alert('$fetch_qty[name] out of stock')</script>";
+                                                }else{
+                                                    echo "<script>alert('$fetch_qty[qty] $fetch_qty[name] left')</script>";
+                                                }
                                             }else if($qty <= 0){
                                                 echo "<script>alert('Minimum Qty should be 1 or Greater than 1')</script>";
                                             }else{
                                                 $user_id = $_SESSION['login_user'];
                                                 $product_id = $fetch_qty['id'];
                                                 $product_qty = $_POST['qty'];
-                                                $if_product_exists = mysqli_query($connection,"SELECT * FROM cart WHERE product_id = $product_id");
+                                                $if_product_exists = mysqli_query($connection,"SELECT * FROM cart WHERE product_id = $product_id and user_id = $_SESSION[login_user]");
                                                 $exist_count = mysqli_num_rows($if_product_exists);
                                                 if($exist_count > 0){
                                                     echo "<script>alert('Product Already Exists')</script>";
                                                 }else{
-                                                    $insert_query = mysqli_query($connection,"INSERT INTO cart (user_id,product_id,product_qty)VALUES($user_id,$product_id,$product_qty)");
+                                                    $insert_query = mysqli_query($connection,"INSERT INTO cart (user_id,product_id,product_qty,status)VALUES($user_id,$product_id,$product_qty,1)");
                                                     if($insert_query){
                                                         echo "<script>alert('Product Add Successfully in the cart')</script>";
                                                     }
@@ -230,7 +203,7 @@
                                     information</a>
                                 </li> -->
                             </ul>
-                            <div class="tab-content">
+                            <div class="tab-content my-3 ">
                                 <div class="tab-pane active" id="tabs-5" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <p class="note"></p>
@@ -318,16 +291,4 @@
     <!-- Shop Details Section End -->
 
     <?php require("footer.php"); ?>
-
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search End -->
-
 <?php require("bottom.php"); ?>

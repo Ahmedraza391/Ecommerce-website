@@ -124,7 +124,7 @@ include("connection.php");
                                 <input type="text" name="p_s_desc" id="s_desc" value="<?php echo $fetch_d['short_desc'] ?>" class="form-control mb-3" placeholder="Enter Product Short Description">
                                 <!-- for Product Desc -->
                                 <label for="desc">Enter Product Description</label>
-                                <input type="text" name="p_desc" id="desc" value="<?php echo $fetch_d['description'] ?>" class="form-control mb-3" placeholder="Enter Product Description">
+                                <textarea name="p_desc" class="form-control mb-3" placeholder="Enter Product Description"><?php echo $fetch_d['description'] ?></textarea>
                                 <!-- for Meta title -->
                                 <label for="m_title">Enter Product Meta Title</label>
                                 <input type="text" name="meta_title" id="m_title" value="<?php echo $fetch_d['meta_title'] ?>" class="form-control mb-3" placeholder="Enter Meta Title">

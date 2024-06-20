@@ -1,0 +1,44 @@
+<div class="profile_menu">
+    <div title="Profile" class="menu_toggler">
+        <?php 
+            if(isset($_SESSION['login_user'])){
+                $user_id = $_SESSION['login_user'];
+                $fetch_user = mysqli_query($connection,"SELECT * FROM users WHERE user_id = $user_id");
+                $fetch_user_assoc = mysqli_fetch_assoc($fetch_user);
+                $fetch_user_name = $fetch_user_assoc['user_name'];
+                $first_character = substr($fetch_user_name, 0, 1);
+                echo "<div class='user_dropdown'><h5>$first_character</h5></div>";
+            }else{
+                echo "<i class='far fa-user'></i>";
+            }
+        ?>
+        <i class="fas fa-sort-down"></i>
+    </div>
+
+
+    <ul class="profile_dropdown">
+
+        <?php
+            if(isset($_SESSION['login_user'])){
+                $user_id = $_SESSION['login_user'];
+                $fetch_user = mysqli_query($connection,"SELECT * FROM users WHERE user_id = $user_id");
+                $fetch_user_assoc = mysqli_fetch_assoc($fetch_user);
+                $fetch_user_name = $fetch_user_assoc['user_name'];
+                $first_character = substr($fetch_user_name, 0, 1);
+                echo "<li>
+                    <a href='user_profile.php'><b>Profile</b><i class='fas fa-user'></i></a>
+                </li>";
+                echo "<li>
+                    <a href='logout_profile.php'><b>Logout</b><i class='fas fa-sign-out-alt'></i></a>
+                </li>";
+            }else{
+                echo "<li>
+                    <a href='login.php'><b>Login</b></a>
+                </li>";
+                echo "<li>
+                    <a href='register.php'><b>Singup</b></a>
+                </li>";
+            }
+        ?>
+    </ul>
+</div>

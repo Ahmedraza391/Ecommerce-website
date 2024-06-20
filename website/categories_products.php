@@ -1,18 +1,18 @@
 <?php
-
-use function PHPSTORM_META\map;
-require("top.php")
-?>
-<title>Products /</title>
-<?php
+require("top.php");
+require("connection.php");
+session_start();
 $file_name = "products"
 ?>
+<title>Products /</title>
 <?php require("navbar.php") ?>
-<!-- Shop Section Begin -->
+<!-- <div id="preloder">
+    <div class="loader"></div>
+</div> -->
 <section class="categories_sec spad">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="col-sm-12 col-md-11 my-3 mx-auto  col-lg-6">
                 <div class="shop__sidebar">
                     <div class="shop__sidebar__accordion">
                         <div class="accordion" id="accordionExample">
@@ -57,82 +57,109 @@ $file_name = "products"
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-3 col-lg-6">
+            <div class="col-sm-12 col-md-11  mx-auto  col-lg-6">
+
                 <div class="shop__sidebar__search">
-                    <form action="#">
-                        <input type="text" id="search" placeholder="Search...">
-                        <button type="submit"><span class="icon_search"></span></button>
+                    <form id="search_form">
+                        <input type="text" id="search_input" placeholder="Search Products..">
+                        <button type="button" id="btn_search" name="btn_search"><span class="icon_search"></span></button>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="shop__product__option">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="shop__product__option__left">
+                        <p>Showing 1–12 of 126 results</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="shop__product__option__right">
+                        <p>Sort by Price:</p>
+                        <form>
+                            <select name="sort" id="sort_select">
+                                <option hidden>Select</option>
+                                <option value="l_high">Low To High</option>
+                                <option value="h_low">High To Low</option>
+                            </select>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <!-- <div class="shop__product__option">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__left">
-                                <p>Showing 1–12 of 126 results</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="shop__product__option__right">
-                                <p>Sort by Price:</p>
-                                <select name="sort" id="sort_select">
-                                    <option hidden>Select</option>
-                                    <option value="low-high">Low To High</option>
-                                    <option value="high-low">High To Low</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="products">
-                    <?php
-                    if (isset($_GET['c_id'])) {
-                        $cid = $_GET['c_id'];
-                        $check_query = mysqli_query($connection, "SELECT * FROM categories WHERE id = $cid");
-                        $fetch = mysqli_fetch_assoc($check_query);
-                        if ($cid !== $fetch['id']) {
-                            echo "<script>window.location.href = 'categories_products.php'</script>";
-                        } else {
-                            if ($cid > 0) {
-                                $value = true;
-                                // this is for filter categories
-                                if (isset($_POST['btn_filter'])) {
-                                    $value = false;
-                                    if ($value == false) {
-                                        $category = $_POST['categories'];
-                                        if ($category == "all") {
-                                            $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1");
-                                            foreach ($fetch_product as $product) {
-                                                echo "<div class='product_card'>";
-                                                    echo "<div>";
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="products" id="searched_products"></div>
+                        <div class="products" id="products">
+                            <?php
+                            if (isset($_GET['c_id'])) {
+                                $cid = $_GET['c_id'];
+                                $check_query = mysqli_query($connection, "SELECT * FROM categories WHERE id = $cid");
+                                $fetch = mysqli_fetch_assoc($check_query);
+                                if ($cid !== $fetch['id']) {
+                                    echo "<script>window.location.href = 'categories_products.php'</script>";
+                                } else {
+                                    if ($cid > 0) {
+                                        $value = true;
+                                        // this is for filter categories
+                                        if (isset($_POST['btn_filter'])) {
+                                            $value = false;
+                                            if ($value == false) {
+                                                $category = $_POST['categories'];
+                                                if ($category == "all") {
+                                                    $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.status = 1 and categories.status = 1");
+                                                    foreach ($fetch_product as $product) {
+                                                        echo "<div class='product_card'>";
                                                         echo "<a href='product_details.php?id=$product[id]'>";
-                                                            echo "<div class='product_image'>";
-                                                                echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                                            echo "</div>";
-                                                            echo "<div class='product_body'>";
-                                                                echo "<h5>$product[name]</h5>";
-                                                                echo "<h6>Rs $product[price]/-</h6>";
-                                                                echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
-                                                                if ($product['qty'] > 0) {
-                                                                    echo "<h6 class='text-success'>Instock</h6>";
-                                                                } else {
-                                                                    echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                                                }
-                                                            echo "</div>";
+                                                        echo "<div class='product_image'>";
+                                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                                        echo "</div>";
+                                                        echo "<div class='product_body'>";
+                                                        echo "<h5>$product[name]</h5>";
+                                                        echo "<h6>Rs $product[price]/-</h6>";
+                                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
+                                                        if ($product['qty'] > 0) {
+                                                            echo "<h6 class='text-success'>Instock</h6>";
+                                                        } else {
+                                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                                        }
+                                                        echo "</div>";
                                                         echo "</a>";
-                                                    echo "</div>";
-                                                echo "</div>";
+                                                        echo "</div>";
+                                                    }
+                                                } else {
+                                                    $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.categories_id = $category and products.status = 1 and categories.status = 1");
+                                                    foreach ($fetch_product as $product) {
+                                                        echo "<div class='product_card'>";
+                                                        echo "<a href='product_details.php?id=$product[id]'>";
+                                                        echo "<div class='product_image'>";
+                                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                                        echo "</div>";
+                                                        echo "<div class='product_body'>";
+                                                        echo "<h5>$product[name]</h5>";
+                                                        echo "<h6>Rs $product[price]/-</h6>";
+                                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
+                                                        if ($product['qty'] > 0) {
+                                                            echo "<h6 class='text-success'>Instock</h6>";
+                                                        } else {
+                                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                                        }
+                                                        echo "</div>";
+                                                        echo "</a>";
+                                                        echo "</div>";
+                                                    }
+                                                }
                                             }
-                                        } else {
-                                            $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE categories_id = $category and status = 1");
+                                        }
+                                        // this is for by default products when the page load
+                                        if ($value == true) {
+                                            $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.categories_id = $cid and products.status = 1 and categories.status = 1");
                                             foreach ($fetch_product as $product) {
                                                 echo "<div class='product_card'>";
-                                                echo "<a href='product_details.php?id=$product[id]' class='product_hover product_hover_1'> View Product</a>";
-                                                echo "<a href='shopping_cart.php?id=$product[id]' class='product_hover product_hover_2'> + Add to Cart</a>";
-                                                echo "<div>";
+                                                echo "<a href='product_details.php?id=$product[id]'>";
                                                 echo "<div class='product_image'>";
                                                 echo "<img src='../admin-panel/$product[image]' alt=''>";
                                                 echo "</div>";
@@ -146,112 +173,32 @@ $file_name = "products"
                                                     echo "<h6 class='text-danger'>Out of Stock</h6>";
                                                 }
                                                 echo "</div>";
-                                                echo "</div>";
+                                                echo "</a>";
                                                 echo "</div>";
                                             }
+                                        } else {
+                                            echo "";
                                         }
-                                    }
-                                }
-                                // this is for by default products when the page load
-                                if ($value == true) {
-                                    $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1 AND categories_id = $cid");
-                                    foreach ($fetch_product as $product) {
-                                        echo "<div class='product_card'>";
-                                            echo "<div>";
-                                                echo "<a href='product_details.php?id=$product[id]'>";
-                                                    echo "<div class='product_image'>";
-                                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                                    echo "</div>";
-                                                    echo "<div class='product_body'>";
-                                                        echo "<h5>$product[name]</h5>";
-                                                        echo "<h6>Rs $product[price]/-</h6>";
-                                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
-                                                        if ($product['qty'] > 0) {
-                                                            echo "<h6 class='text-success'>Instock</h6>";
-                                                        } else {
-                                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                                        }
-                                                    echo "</div>";
-                                                echo "</a>";
-                                            echo "</div>";
-                                        echo "</div>";
-                                    }
-                                } else {
-                                    echo "";
-                                }
-                            } else {
-                                echo "<script>window.location.href = 'categories_products.php';</script>";
-                            }
-                        }
-                    } else {
-                        $value = true;
-                        // this is for filter categories
-                        if (isset($_POST['btn_filter'])) {
-                            $value = false;
-                            if ($value == false) {
-                                $category = $_POST['categories'];
-                                if ($category == "all") {
-                                    $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1");
-                                    foreach ($fetch_product as $product) {
-                                        echo "<div class='product_card'>";
-                                            echo "<div>";
-                                                echo "<a href='product_details.php?id=$product[id]'>";
-                                                    echo "<div class='product_image'>";
-                                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                                    echo "</div>";
-                                                    echo "<div class='product_body'>";
-                                                        echo "<h5>$product[name]</h5>";
-                                                        echo "<h6>Rs $product[price]/-</h6>";
-                                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
-                                                        if ($product['qty'] > 0) {
-                                                            echo "<h6 class='text-success'>Instock</h6>";
-                                                        } else {
-                                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                                        }
-                                                    echo "</div>";
-                                                echo "</a>";
-                                            echo "</div>";
-                                        echo "</div>";
-                                    }
-                                } else {
-                                    $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE categories_id = $category and status = 1");
-                                    foreach ($fetch_product as $product) {
-                                        echo "<div class='product_card'>";
-                                            echo "<div>";
-                                                echo "<a href='product_details.php?id=$product[id]'>";
-                                                    echo "<div class='product_image'>";
-                                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                                    echo "</div>";
-                                                    echo "<div class='product_body'>";
-                                                        echo "<h5>$product[name]</h5>";
-                                                        echo "<h6>Rs $product[price]/-</h6>";
-                                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
-                                                        if ($product['qty'] > 0) {
-                                                            echo "<h6 class='text-success'>Instock</h6>";
-                                                        } else {
-                                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                                        }
-                                                    echo "</div>";
-                                                echo "</a>";
-                                            echo "</div>";
-                                        echo "</div>";
+                                    } else {
+                                        echo "<script>window.location.href = 'categories_products.php';</script>";
                                     }
                                 }
                             } else {
-                            }
-                        } else {
-                        }
-                        // this condition is for by default product when the page load
-                        if ($value == true) {
-                            $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1");
-                            foreach ($fetch_product as $product) {
-                                echo "<div class='product_card'>";
-                                    echo "<div>";
-                                        echo "<a href='product_details.php?id=$product[id]'>";
-                                            echo "<div class='product_image'>";
+                                $value = true;
+                                // this is for filter categories
+                                if (isset($_POST['btn_filter'])) {
+                                    $value = false;
+                                    if ($value == false) {
+                                        $category = $_POST['categories'];
+                                        if ($category == "all") {
+                                            $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.status = 1 and categories.status = 1");
+                                            foreach ($fetch_product as $product) {
+                                                echo "<div class='product_card'>";
+                                                echo "<a href='product_details.php?id=$product[id]'>";
+                                                echo "<div class='product_image'>";
                                                 echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                            echo "</div>";
-                                            echo "<div class='product_body'>";
+                                                echo "</div>";
+                                                echo "<div class='product_body'>";
                                                 echo "<h5>$product[name]</h5>";
                                                 echo "<h6>Rs $product[price]/-</h6>";
                                                 echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
@@ -260,22 +207,69 @@ $file_name = "products"
                                                 } else {
                                                     echo "<h6 class='text-danger'>Out of Stock</h6>";
                                                 }
-                                            echo "</div>";
+                                                echo "</div>";
+                                                echo "</a>";
+                                                echo "</div>";
+                                            }
+                                        } else {
+                                            $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.categories_id = $category and products.status = 1 and categories.status = 1");
+                                            foreach ($fetch_product as $product) {
+                                                echo "<div class='product_card'>";
+                                                echo "<a href='product_details.php?id=$product[id]'>";
+                                                echo "<div class='product_image'>";
+                                                echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                                echo "</div>";
+                                                echo "<div class='product_body'>";
+                                                echo "<h5>$product[name]</h5>";
+                                                echo "<h6>Rs $product[price]/-</h6>";
+                                                echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
+                                                if ($product['qty'] > 0) {
+                                                    echo "<h6 class='text-success'>Instock</h6>";
+                                                } else {
+                                                    echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                                }
+                                                echo "</div>";
+                                                echo "</a>";
+                                                echo "</div>";
+                                            }
+                                        }
+                                    } else {
+                                    }
+                                } else {
+                                }
+                                // this condition is for by default product when the page load
+                                if ($value == true) {
+                                    $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.status = 1 and categories.status = 1");
+                                    foreach ($fetch_product as $product) {
+                                        echo "<div class='product_card'>";
+                                        echo "<a href='product_details.php?id=$product[id]'>";
+                                        echo "<div class='product_image'>";
+                                        echo "<img src='../admin-panel/$product[image]' alt=''>";
+                                        echo "</div>";
+                                        echo "<div class='product_body'>";
+                                        echo "<h5>$product[name]</h5>";
+                                        echo "<h6>Rs $product[price]/-</h6>";
+                                        echo "<h6 class='strike_trough'>Rs $product[mrp]/-</h6>";
+                                        if ($product['qty'] > 0) {
+                                            echo "<h6 class='text-success'>Instock</h6>";
+                                        } else {
+                                            echo "<h6 class='text-danger'>Out of Stock</h6>";
+                                        }
+                                        echo "</div>";
                                         echo "</a>";
-                                    echo "</div>";
-                                echo "</div>";
+                                        echo "</div>";
+                                    }
+                                } else {
+                                    echo "";
+                                }
                             }
-                        } else {
-                            echo "";
-                        }
-                    }
-                    ?>
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Shop Section End -->
-
 <?php require("footer.php"); ?>
 <?php require("bottom.php"); ?>

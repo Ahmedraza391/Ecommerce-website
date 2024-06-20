@@ -6,13 +6,13 @@
 </style>
 <!-- Sidebar -->
 <ul class="navbar-nav new-clr sidebar sidebar_z position-fixed sidebar-light font-weight-bold accordion" id="accordionSidebar" style="transition: .3s !important;">
-
+    <!-- Divider -->
+    <hr class="sidebar-divider border-dark">
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="index.php">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            Dashboard
         </a>
     </li>
 
@@ -27,7 +27,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a href="categories.php" class="nav-link ">
-            Categories Master
+            Categories
         </a>
     </li>
 
@@ -36,7 +36,7 @@
 
     <li class="nav-item">
         <a href="products.php" class="nav-link ">
-            Product Master
+            Products
         </a>
     </li>
 
@@ -44,8 +44,8 @@
     <hr class="sidebar-divider border-dark">
 
     <li class="nav-item">
-        <a href="categories.php" class="nav-link ">
-            Order Master
+        <a href="order.php" class="nav-link ">
+            Orders
         </a>
     </li>
 
@@ -54,7 +54,16 @@
 
     <li class="nav-item">
         <a href="users.php" class="nav-link ">
-            User Master
+            Users
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider border-dark">
+
+    <li class="nav-item">
+        <a href="slider.php" class="nav-link ">
+            Website Slider
         </a>
     </li>
 
@@ -94,7 +103,7 @@
     <hr class="sidebar-divider d-none d-md-block border-dark">
 
     <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
+    <div class="text-center d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
     

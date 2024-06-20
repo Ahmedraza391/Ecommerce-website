@@ -23,12 +23,10 @@ include("connection.php");
             <div class="row m-0">
                 <div class="col-md-2 "></div>
                 <div class="col-md-10 ">
-                    <div class="content shadow p-5 mb-5 mx-2 bg-body-tertiary rounded">
-                        <a href="categories.php">
-                            <button class="btn btn-primary font-weight-bolder"> / Back</button>
-                        </a>
+                    <div class="content shadow p-md-5 p-3 mb-5 mx-2 bg-body-tertiary rounded">
+                        <a href="categories.php" class="btn btn-primary my-3 font-weight-bolder">/ Back</a>
                         <div class="d-sm-flex align-items-center justify-content-center mb-4">
-                            <h1 class="h3 mb-0 text-gray-800 border-dark border-bottom">Edit / Update Category</h1>
+                            <h1 class="h4 mb-0 text-gray-800 border-dark border-bottom font-weight-bold">Edit / Update Category</h1>
                         </div>
                         <?php 
                             $id = $_GET['id'];

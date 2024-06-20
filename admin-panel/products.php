@@ -6,15 +6,13 @@ if (!isset($_SESSION["login"])) {
 } else {
 }
 include("connection.php");
-$query_table = "SELECT products.*,products.id as p_id,products.status as p_status,categories.* FROM products INNER JOIN categories ON products.categories_id = categories.id";
-$result = mysqli_query($connection, $query_table);
 ?>
 <?php include("top_page.php") ?>
 <!-- Internal Css -->
 <style>
     .overflow {
         width: 900px;
-        height: 50vh;
+        height: 60vh;
         overflow: auto;
         /* overflow-y: auto; */
         padding: 10px;
@@ -56,12 +54,7 @@ $result = mysqli_query($connection, $query_table);
                                         </div>
                                     </div>
                                     <div class="text-center d-flex justify-content-center  ">
-                                        <h2 class="text-dark border-bottom border-dark w-25 fw-bold ">Products</h2>
-                                    </div>
-                                    <div class="button my-2">
-                                        <a href="manage_products.php">
-                                            <button class="btn btn-primary">Add Product</button>
-                                        </a>
+                                        <h2 class="text-dark border-bottom border-primary w-25 font-weight-bold">Products</h2>
                                     </div>
                                     <div class="overflow w-100 " id="table_div">
                                         <table class="table text-dark table-bordered table-striped" id="old_table">
@@ -78,14 +71,16 @@ $result = mysqli_query($connection, $query_table);
                                             </thead>
                                             <tbody id="tbody">
                                                 <?php
+                                                $query_table = "SELECT products.*,products.id as p_id,products.status as p_status,categories.* FROM products INNER JOIN categories ON products.categories_id = categories.id";
+                                                $result = mysqli_query($connection, $query_table);
                                                 foreach ($result as $row) {
                                                     echo "<tr class='text-center'>";
                                                     echo "<td class='align-middle'>$row[p_id]</td>";
                                                     echo "<td class='align-middle'>$row[name]</td>";
                                                     echo "<td class='align-middle'><img src='$row[image]' width='150px' height='70px'/></td>";
                                                     echo "<td class='align-middle'>$row[categories]</td>";
-                                                        echo "<td class='align-middle'>$row[mrp]</td>";
-                                                        echo "<td class='align-middle'>$row[price]</td>";
+                                                        echo "<td class='align-middle'>Rs $row[mrp]/-</td>";
+                                                        echo "<td class='align-middle'>Rs $row[price]/-</td>";
                                                         echo "<td class='align-middle'>$row[qty]</td>";
                                                         echo "<td class='align-middle'>";
                                                             if ($row['p_status'] == 1) {
@@ -122,6 +117,11 @@ $result = mysqli_query($connection, $query_table);
                                             </tbody>
                                         </table>
                                     </div>
+                                    <div class="button my-2">
+                                        <a href="manage_products.php">
+                                            <button class="btn btn-primary">Add Product</button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -133,29 +133,5 @@ $result = mysqli_query($connection, $query_table);
     </div>
     <!-- End of Main Content -->
 </div>
-<!-- End of Content Wrapper -->
-<script>
-    function checking() {
-        return confirm("Are you sure to Want Delete this Category");
-    }
-</script>
-<!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $(document).on("keyup", "#p_name", function() {
-            var name = $("#p_name").val();
-            $.ajax({
-                url: "search_product.php",
-                type: "POST",
-                data: {
-                    p_name: name
-                },
-                success: function(data) {
-                    $("#tbody").html(data);
-                }
-            })
-        })
-    })
-</script>
+<!-- End of Content Wrapper
 <?php include("bottom_page.php") ?>

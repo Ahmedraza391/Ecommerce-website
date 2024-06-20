@@ -1,98 +1,51 @@
 <?php
-    session_start();
-    require("connection.php")
-?>
-<?php
-// if(isset())
+session_start();
+require("connection.php")
 ?>
 <?php require("top.php") ?>
 <title>Home /</title>
 <?php
-$file_name = "home"
+    $file_name = "home";
+
+    $slider_status = true;
+    $_fetch_products = "SELECT tbl_slider.*, products.* FROM tbl_slider INNER JOIN products ON tbl_slider.product_id = products.id WHERE products.status = 1 AND tbl_slider.status = 'show' ";
+    $run_fetch = mysqli_query($connection, $_fetch_products);
 ?>
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 <?php require("navbar.php") ?>
-<section class="hero">
-    <div class="hero__slider owl-carousel">
-        <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-                            <h6>Summer Collection</h6>
-                            <h2>Fall - Winter Collections 2030</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, itaque.</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                            <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="hero_container">
+    <div id="carousel_caption" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <?php
+            if ($run_fetch) {
+                foreach ($run_fetch as $pro) {
+                    $active = $slider_status ? 'active' : '';
+                    echo "<div class='carousel-item $active'>";
+                        echo "<a href='$pro[anchor_page]'>";
+                            echo "<img src='../admin-panel/$pro[product_image]' class='d-block' alt='...'>";
+                            echo "<div class='carousel-caption d-none d-md-block'>";
+                                echo "<h5>$pro[name]</h5>";
+                                echo "<p>$pro[product_desc]</p>";
+                            echo "</div>";
+                        echo "</a>";
+                    echo "</div>";
+                    $slider_status = false;
+                }
+            } else {
+                echo "Error fetching products: " . mysqli_error($connection);
+            }
+            ?>
         </div>
-        <div class="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-                            <h6>Summer Collection</h6>
-                            <h2>Fall - Winter Collections 2030</h2>
-                            <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                            <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="banner spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 offset-lg-4">
-                <div class="banner__item">
-                    <div class="banner__item__pic">
-                        <img src="img/banner/banner-1.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Clothing Collections 2030</h2>
-                        <a href="#">Shop now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="banner__item banner__item--middle">
-                    <div class="banner__item__pic">
-                        <img src="img/banner/banner-2.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Accessories</h2>
-                        <a href="#">Shop now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="banner__item banner__item--last">
-                    <div class="banner__item__pic">
-                        <img src="img/banner/banner-3.jpg" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Shoes Spring 2030</h2>
-                        <a href="#">Shop now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-target="#carousel_caption" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#carousel_caption" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </button>
     </div>
 </section>
 <section class="product_section">
@@ -102,74 +55,49 @@ $file_name = "home"
                 <h2>Top Selling Products</h2>
             </div>
         </div>
-        <div class="products">
-            <?php
-                $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1 LIMIT 4");
-                foreach ($fetch_product as $product) {
-                    echo "<div class='product_card'>";
-                        echo "<div>";
-                            echo "<a href='product_details.php?id=$product[id]'>";
-                                echo "<div class='product_image'>";
-                                    echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                echo "</div>";
-                                echo "<div class='product_body'>";
-                                    echo "<h5>$product[name]</h5>";
-                                    echo "<h6>Rs $product[price]/-</h6>";
-                                    echo "<h6>Rs $product[mrp]/-</h6>";
-                                    if($product['qty']>0){
-                                        echo "<h6 class='text-success'>Instock</h6>";
-                                    }else{
-                                        echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                    }
-                                echo "</div>";
-                            echo "</a>";
+        <div class="row">
+            <div class="col-md-12">
+                <div class="products">
+                    <?php
+                    $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.status = 1 and categories.status = 1 LIMIT 4");
+                    foreach ($fetch_product as $product) {
+                        echo "<div class='product_card'>";
+                        echo "<a href='product_details.php?id=$product[id]'>";
+                        echo "<div class='product_image'>";
+                        echo "<img src='../admin-panel/$product[image]' alt=''>";
                         echo "</div>";
-                    echo "</div>";
-                }
-            ?>
+                        echo "<div class='product_body'>";
+                        echo "<h5>$product[name]</h5>";
+                        echo "<h6>Rs $product[price]/-</h6>";
+                        echo "<h6>Rs $product[mrp]/-</h6>";
+                        if ($product['qty'] > 0) {
+                            echo "<h6 class='text-success'>Instock</h6>";
+                        } else {
+                            echo "<h6 class='text-danger'>Out of Stock</h6>";
+                        }
+                        echo "</div>";
+                        echo "</a>";
+                        echo "</div>";
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 </section>
-<section class="categories spad">
+<section class="banner spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
-                <div class="categories__text">
-                    <h2>Clothings Hot <br /> <span>Shoe Collection</span> <br /> Accessories</h2>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="categories__hot__deal">
-                    <img src="img/product-sale.png" alt="">
-                    <div class="hot__deal__sticker">
-                        <span>Sale Of</span>
-                        <h5>$29.99</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 offset-lg-1">
-                <div class="categories__deal__countdown">
-                    <span>Deal Of The Week</span>
-                    <h2>Multi-pocket Chest Bag Black</h2>
-                    <div class="categories__deal__countdown__timer" id="countdown">
-                        <div class="cd-item">
-                            <span>3</span>
-                            <p>Days</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>1</span>
-                            <p>Hours</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>50</span>
-                            <p>Minutes</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>18</span>
-                            <p>Seconds</p>
+            <div class="col-12">
+                <div class="first_banner_product">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="banner_behind_product">
+                                <h2>Explore Men's Shoes</h2>
+                                <a href="categories_products.php?c_id=2" class="btn btn-outline-danger">Explore Shoes</a>
+                            </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">Shop now</a>
                 </div>
             </div>
         </div>
@@ -184,28 +112,26 @@ $file_name = "home"
         </div>
         <div class="products">
             <?php
-                $fetch_product = mysqli_query($connection, "SELECT * FROM products WHERE status = 1");
-                foreach ($fetch_product as $product) {
-                    echo "<div class='product_card'>";
-                        echo "<div>";
-                            echo"<a href='product_details.php?id=$product[id]'>";
-                                echo "<div class='product_image'>";
-                                    echo "<img src='../admin-panel/$product[image]' alt=''>";
-                                echo "</div>";
-                                echo "<div class='product_body'>";
-                                    echo "<h5>$product[name]</h5>";
-                                    echo "<h6>Rs $product[price]/-</h6>";
-                                    echo "<h6>Rs $product[mrp]/-</h6>";
-                                    if($product['qty']>0){
-                                        echo "<h6 class='text-success'>Instock</h6>";
-                                    }else{
-                                        echo "<h6 class='text-danger'>Out of Stock</h6>";
-                                    }
-                                echo "</div>";
-                            echo "</a>";
-                        echo "</div>";
-                    echo "</div>";
+            $fetch_product = mysqli_query($connection, "SELECT products.*,categories.status as 'c_status',categories.id as 'c_id' FROM products INNER JOIN categories ON products.categories_id = categories.id WHERE products.status = 1 and categories.status = 1");
+            foreach ($fetch_product as $product) {
+                echo "<div class='product_card'>";
+                echo "<a href='product_details.php?id=$product[id]'>";
+                echo "<div class='product_image'>";
+                echo "<img src='../admin-panel/$product[image]' alt=''>";
+                echo "</div>";
+                echo "<div class='product_body'>";
+                echo "<h5>$product[name]</h5>";
+                echo "<h6>Rs $product[price]/-</h6>";
+                echo "<h6>Rs $product[mrp]/-</h6>";
+                if ($product['qty'] > 0) {
+                    echo "<h6 class='text-success'>Instock</h6>";
+                } else {
+                    echo "<h6 class='text-danger'>Out of Stock</h6>";
                 }
+                echo "</div>";
+                echo "</a>";
+                echo "</div>";
+            }
             ?>
         </div>
     </div>

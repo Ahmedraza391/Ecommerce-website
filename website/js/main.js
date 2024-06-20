@@ -213,3 +213,9 @@
         });
     });
 })(jQuery);
+
+
+
+
+// for getting year
+document.getElementById("copyrightYear").textContent = new Date().getFullYear();

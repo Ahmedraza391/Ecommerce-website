@@ -38,16 +38,11 @@ $result = mysqli_query($connection, $query_table);
             <div class="row m-0">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    <div class="container bg-light shadow p-md-5 mb-5 bg-light rounded">
+                    <div class="container bg-light shadow p-md-5 p-3 mb-5 bg-light rounded">
                         <div class="row ">
                             <div class="col-md-12">
                                 <div class="text-center d-md-flex justify-content-center  ">
-                                    <h2 class="text-dark border-bottom border-dark w-25 fw-bold ">Categoires</h2>
-                                </div>
-                                <div class="button my-2">
-                                    <a href="manage_categories.php">
-                                        <button class="btn btn-primary">Add Category</button>
-                                    </a>
+                                    <h2 class="text-dark border-bottom border-primary w-25 font-weight-bold">Categoires</h2>
                                 </div>
                                 <div class="overflow">
                                     <table class="table text-dark table-bordered table-striped">
@@ -96,6 +91,11 @@ $result = mysqli_query($connection, $query_table);
                                         ?>
                                     </table>
                                 </div>
+                                <div class="button my-2">
+                                    <a href="manage_categories.php" class="btn btn-primary">
+                                        Add Category
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +104,6 @@ $result = mysqli_query($connection, $query_table);
         </div>
     </div>
     <!-- End of Main Content -->
-
 
 </div>
 <!-- End of Content Wrapper -->
