@@ -6,9 +6,9 @@ $file_name = "products"
 ?>
 <title>Products /</title>
 <?php require("navbar.php") ?>
-<!-- <div id="preloder">
+<div id="preloder">
     <div class="loader"></div>
-</div> -->
+</div>
 <section class="categories_sec spad">
     <div class="container">
         <div class="row">
@@ -58,7 +58,6 @@ $file_name = "products"
                 </div>
             </div>
             <div class="col-sm-12 col-md-11  mx-auto  col-lg-6">
-
                 <div class="shop__sidebar__search">
                     <form id="search_form">
                         <input type="text" id="search_input" placeholder="Search Products..">
@@ -69,14 +68,10 @@ $file_name = "products"
         </div>
         <div class="shop__product__option">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="shop__product__option__left">
-                        <p>Showing 1–12 of 126 results</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <hr>
                     <div class="shop__product__option__right">
-                        <p>Sort by Price:</p>
+                        <p class="mx-3">Sort by Price:</p>
                         <form>
                             <select name="sort" id="sort_select">
                                 <option hidden>Select</option>
@@ -85,6 +80,7 @@ $file_name = "products"
                             </select>
                         </form>
                     </div>
+                    <hr>
                 </div>
             </div>
         </div>

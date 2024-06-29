@@ -10901,4 +10901,8 @@ body.sidebar-toggled footer.sticky-footer {
   font-size: 30px;
   color:	#dddfeb;
 }
+img{
+  width: 100%;
+  object-fit: cover;
+}
 /* extra css */

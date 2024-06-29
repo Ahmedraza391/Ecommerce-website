@@ -68,6 +68,7 @@ include("connection.php");
                                                 <th>Product Qty</th>
                                                 <th>Product Status</th>
                                                 <th>Operations</th>
+                                                <th>View Product</th>
                                             </thead>
                                             <tbody id="tbody">
                                                 <?php
@@ -75,10 +76,10 @@ include("connection.php");
                                                 $result = mysqli_query($connection, $query_table);
                                                 foreach ($result as $row) {
                                                     echo "<tr class='text-center'>";
-                                                    echo "<td class='align-middle'>$row[p_id]</td>";
-                                                    echo "<td class='align-middle'>$row[name]</td>";
-                                                    echo "<td class='align-middle'><img src='$row[image]' width='150px' height='70px'/></td>";
-                                                    echo "<td class='align-middle'>$row[categories]</td>";
+                                                        echo "<td class='align-middle'>$row[p_id]</td>";
+                                                        echo "<td class='align-middle'>$row[name]</td>";
+                                                        echo "<td class='align-middle'><img src='$row[image]' width='150px' height='70px'/></td>";
+                                                        echo "<td class='align-middle'>$row[categories]</td>";
                                                         echo "<td class='align-middle'>Rs $row[mrp]/-</td>";
                                                         echo "<td class='align-middle'>Rs $row[price]/-</td>";
                                                         echo "<td class='align-middle'>$row[qty]</td>";
@@ -109,6 +110,11 @@ include("connection.php");
                                                                 <button class='btn btn-success px-3 btn-sm '>
                                                                     Edit
                                                                 </button>
+                                                            </a>
+                                                        </td>";
+                                                        echo "<td class='align-middle'>
+                                                            <a href='view_product.php?id=$row[p_id]'>
+                                                                <button class='btn btn-success px-3 btn-sm '>View</button>
                                                             </a>
                                                         </td>";
                                                     echo "</tr>";

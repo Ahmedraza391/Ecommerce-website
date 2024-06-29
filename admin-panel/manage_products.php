@@ -71,15 +71,6 @@ include("connection.php");
                                     <div class="form-floating mb-3">
                                         <textarea type="text" class="form-control" name="p_desc" placeholder="Enter Long Description" required></textarea>
                                     </div>
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" name="p_meta_title" placeholder="Enter Meta Title" required>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <textarea type="text" class="form-control" name="p_meta_desc" placeholder="Enter Meta Description" required></textarea>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <textarea type="text" id="metakeyword" class="form-control" name="p_meta_keyword" placeholder="Enter Meta Keyword" required></textarea>
-                                    </div>
                                     <div class="button my-2">
                                         <a href="categories.php">
                                             <button class="btn btn-success px-5" type="submit" name="btn_add">Add</button>
@@ -110,10 +101,7 @@ include("connection.php");
                                         $qty = $_POST['p_qty'];
                                         $short_desc = $_POST['p_short_desc'];
                                         $desc = $_POST['p_desc'];
-                                        $meta_title = $_POST['p_meta_title'];
-                                        $meta_desc = $_POST['p_meta_desc'];
-                                        $meta_keyword = $_POST['p_meta_keyword'];
-                                        $query = "INSERT INTO products(name,categories_id,mrp,price,image,qty,short_desc,description,meta_title,meta_desc,meta_keyword,status)VALUES('$name','$category','$mrp','$price','$folder','$qty','$short_desc','$desc','$meta_title','$meta_desc','$meta_keyword','1')";
+                                        $query = "INSERT INTO products(name,categories_id,mrp,price,image,qty,short_desc,description,status)VALUES('$name','$category','$mrp','$price','$folder','$qty','$short_desc','$desc','1')";
                                         $result = mysqli_query($connection,$query);
                                         if($result){
                                             $msg = "Product Added Successfully";

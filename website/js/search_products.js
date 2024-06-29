@@ -21,16 +21,20 @@ $(document).ready(function(){
             type: "POST",
             data: {data: input},
             success: function(e){
+                if(e.trim() == ""){
+                    $("#searched_products").html("<div class='p-2 text-danger font-weight-bold'>Product Not Found</div>");
+                    $("#products").css("display", "none");
+                } else {
+                    $("#searched_products").html(e);
+                    $("#products").css("display", "none");
+                }
                 if(input.length === 0) {
                     $("#products").css("display", "grid");
                     $("#searched_products").html("");
-                    alert("")
-                } else {
-                    $("#products").css("display", "none");
-                    $("#searched_products").html(e);
                 }
             }
         });
     });
+    
 
 })

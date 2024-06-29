@@ -125,15 +125,6 @@ include("connection.php");
                                 <!-- for Product Desc -->
                                 <label for="desc">Enter Product Description</label>
                                 <textarea name="p_desc" class="form-control mb-3" placeholder="Enter Product Description"><?php echo $fetch_d['description'] ?></textarea>
-                                <!-- for Meta title -->
-                                <label for="m_title">Enter Product Meta Title</label>
-                                <input type="text" name="meta_title" id="m_title" value="<?php echo $fetch_d['meta_title'] ?>" class="form-control mb-3" placeholder="Enter Meta Title">
-                                <!-- for Meta Description -->
-                                <label for="m_desc">Enter Product Meta Description</label>
-                                <input type="text" name="meta_desc" id="m_desc" value="<?php echo $fetch_d['meta_desc'] ?>" class="form-control mb-3" placeholder="Enter Meta Description">
-                                <!-- for Meta keywords -->
-                                <label for="m_keyword">Enter Product Meta Keyword</label>
-                                <input type="text" name="meta_keyword" id="m_keyword" value="<?php echo $fetch_d['meta_keyword'] ?>" class="form-control mb-3" placeholder="Enter Meta Keyword">
                             </div>
                             <button type="submit" name="btn_update" class="btn btn-primary">Update Product</button>
                         </form>
@@ -147,11 +138,7 @@ include("connection.php");
                                 $qty = $_POST['p_qty'];
                                 $short_desc = $_POST['p_s_desc'];
                                 $desc = $_POST['p_desc'];
-                                $meta_title = $_POST['meta_title'];
-                                $meta_desc = $_POST['meta_desc'];
-                                $meta_keyword = $_POST['meta_keyword'];
-                                $meta_desc = $_POST['meta_desc'];
-                                $cat_query = "UPDATE products SET categories_id='$category',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$desc',meta_title='$meta_title',meta_desc='$meta_desc',meta_keyword='$meta_keyword' WHERE id = $id";
+                                $cat_query = "UPDATE products SET categories_id='$category',name='$name',mrp='$mrp',price='$price',qty='$qty',short_desc='$short_desc',description='$desc' WHERE id = $id";
                                 $cat_result = mysqli_query($connection, $cat_query);
                                 if ($cat_result) {
                                     echo "<script>

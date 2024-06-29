@@ -31,9 +31,13 @@
                         <div class="row m-0 bg-light shadow m-2 p-md-5 bg-light rounded">
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
-                                <h2 class="text-center text-dark fs-1 border-bottom border-dark">Admin Profile</h2>
+                                <hr>
+                                <h2 class="text-center text-dark fs-1">Admin Profile</h2>
+                                <hr>
                                 <form method="POST">
                                     <div class="form-group">
+                                        <label for="name" class="text-dark">Enter Admin Name</label>
+                                        <input type="text" id="name" name="username" value="<?php echo $fetch['admin_name'] ?>" class="form-control mb-3" placeholder="Username">
                                         <label for="username" class="text-dark">Enter Admin Username</label>
                                         <input type="text" id="username" name="username" value="<?php echo $fetch['username'] ?>" class="form-control mb-3" placeholder="Username">
                                         <label for="password" class="text-dark">Enter Admin Password</label>
